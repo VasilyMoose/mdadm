@@ -27,3 +27,10 @@ for i in $(seq 1 5); do sudo mkfs.ext4 /dev/md0p$i; done
 mkdir -p /raid/part{1,2,3,4,5}
 for i in $(seq 1 5); do mount /dev/md0p$i /raid/part$i; don 
 
+Также удалось произвести замену диска в RAID
+# вытащить диск, сначало метим его.
+mdadm --manage /dev/md0 --fail /dev/sdc 
+# вытащить диск из масива
+mdadm --manage /dev/md0 --remove /dev/sdc
+# добавляем диск
+mdadm --manage /dev/md0 --add /dev/sde
